@@ -10,6 +10,7 @@ public class Activater : MonoBehaviour
     private GameObject note;
     private SpriteRenderer sr;
     private Color old;
+    public GameObject kz;
 
     void Awake(){
         sr = GetComponent<SpriteRenderer>();
@@ -19,7 +20,7 @@ public class Activater : MonoBehaviour
     void Start()
     {
         old = sr.color;
-        PlayerPrefs.SetInt("Score", 0);
+        kz = GameObject.Find("KillZone");
     }
 
     // Update is called once per frame
@@ -30,7 +31,11 @@ public class Activater : MonoBehaviour
         }
         if(Input.GetKeyDown(key) && active){
             Destroy(note);
+            kz.GetComponent<KillZone>().AddStreak();
             AddScore();
+        }
+        else if(Input.GetKeyDown(key) && !active){
+            kz.GetComponent<KillZone>().ResetStreak();
         }
     }
 
@@ -46,7 +51,7 @@ public class Activater : MonoBehaviour
     }
 
     void AddScore(){
-        PlayerPrefs.SetInt("Score", PlayerPrefs.GetInt("Score")+100);
+        PlayerPrefs.SetInt("Score", PlayerPrefs.GetInt("Score")+kz.GetComponent<KillZone>().GetScore());
     }
 
     IEnumerator Pressed(){
