@@ -10,7 +10,7 @@ public class Activater : MonoBehaviour
     private GameObject note;
     private SpriteRenderer sr;
     private Color old;
-    public GameObject kz;
+    private GameObject kz;
 
     void Awake(){
         sr = GetComponent<SpriteRenderer>();

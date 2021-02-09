@@ -18,8 +18,8 @@ public class RandomNotesGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        xPosition = new float[8] {-3.5f, -2.5f, -1.5f, -0.5f, 0.5f, 1.5f, 2.5f, 3.5f};
-        notesColor = new Color[8] {Color.black, Color.magenta, Color.red, Color.yellow, Color.green, Color.cyan, Color.blue, Color.white};
+        xPosition = new float[6] {-2.5f, -1.5f, -0.5f, 0.5f, 1.5f, 2.5f};
+        notesColor = new Color[6] {Color.yellow, Color.magenta, Color.blue, Color.green, Color.red, Color.cyan};
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class RandomNotesGenerator : MonoBehaviour
     {
         reloadProgress += Time.deltaTime;
         if(reloadProgress >= reloadTime){
-            rand = r.Next(8);
+            rand = r.Next(6);
             randomX = xPosition[rand];
             newObject = Instantiate<GameObject>(notesPrefab, new Vector2(randomX, 6), Quaternion.identity);
             newObject.GetComponent<SpriteRenderer>().color = notesColor[rand];

@@ -17,6 +17,7 @@ public class RockMeter : MonoBehaviour
     void Update()
     {
         rm = PlayerPrefs.GetInt("RockMetter");
-        needle.transform.localPosition = new Vector3((rm-25)/25, 0, 0);
+        rm = (rm-25)*12;
+        needle.transform.localPosition = new Vector3(rm/150, 0, 0);
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class KillZone : MonoBehaviour
 {
@@ -49,7 +51,7 @@ public class KillZone : MonoBehaviour
     }
 
     void Lose(){
-        //Lose game
+        SceneManager.LoadScene("Loose");
     }
 
     void UpdateGUI(){
