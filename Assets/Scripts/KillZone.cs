@@ -10,6 +10,8 @@ public class KillZone : MonoBehaviour
 
     int multiplier = 1;
     int streak = 0;
+    public bool testlevel;
+    public int level;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,7 @@ public class KillZone : MonoBehaviour
         PlayerPrefs.SetInt("Score", 0);
         PlayerPrefs.SetInt("Streak", 0);
         PlayerPrefs.SetInt("RockMetter", 25);
+        PlayerPrefs.SetInt("Level", level);
     }
 
     // Update is called once per frame
@@ -32,8 +35,11 @@ public class KillZone : MonoBehaviour
 
     public void ResetStreak(){
         PlayerPrefs.SetInt("RockMetter", PlayerPrefs.GetInt("RockMetter") - 2);
-        if (PlayerPrefs.GetInt("RockMetter") < 0){
+        if (PlayerPrefs.GetInt("RockMetter") < 0 && !testlevel){
             Lose();
+        }
+        else if (PlayerPrefs.GetInt("RockMetter") < 0){
+            PlayerPrefs.SetInt("RockMetter", PlayerPrefs.GetInt("RockMetter") + 2);
         }
         streak = 0;
         multiplier = 1;

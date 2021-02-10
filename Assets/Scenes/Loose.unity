@@ -207,7 +207,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 150364677}
-        m_TargetAssemblyTypeName: PlayAgain, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayAgainLevels, Assembly-CSharp
         m_MethodName: playAgain
         m_Mode: 1
         m_Arguments:
@@ -265,9 +265,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 150364672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72adf432876005a4aa9d429aed9aa3c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 10c5a7216a1827f41b495d86e0750d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 0
 --- !u!1 &729432179
 GameObject:
   m_ObjectHideFlags: 0
