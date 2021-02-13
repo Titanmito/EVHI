@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayAgainTest : MonoBehaviour
 {
     public void playAgain(){
-        SceneManager.LoadScene("TestLevel");
+        SceneManager.LoadScene("TestLevel", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(gameObject.scene);
     }
 }

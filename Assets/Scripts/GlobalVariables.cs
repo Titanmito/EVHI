@@ -1,4 +1,7 @@
-﻿public class GlobalVariables
+﻿using System;
+using System.IO;
+
+public class GlobalVariables
 {
     public static int nbFeatures = 46;
     public static string featuresExceptionMessage =
@@ -20,4 +23,24 @@
         initPath = "users_data_init_level.csv";
     public static string csvValueSeparator = ",", csvLineSeparator = "\n";
     public static string cultureName = "fr-FR";
+
+    public static int GetMaxUserID()
+    {
+        string[] lines = File.ReadAllLines(usersPath);
+        string line = "";
+        int max = -1, id = 0;
+        for (int i = 1; i < lines.Length; i++)
+        {
+            line = lines[i];
+            if (line != "")
+            {
+                id = Int32.Parse(line.Split(csvValueSeparator[0])[0]);
+                if (i == 1)
+                    max = id;
+                else if (id > max)
+                    max = id;
+            }
+        }
+        return max;
+    }
 }

@@ -57,7 +57,8 @@ public class KillZone : MonoBehaviour
     }
 
     void Lose(){
-        SceneManager.LoadScene("Loose");
+        SceneManager.LoadScene("Lose", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(gameObject.scene);
     }
 
     void UpdateGUI(){
