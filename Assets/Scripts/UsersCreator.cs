@@ -6,7 +6,10 @@ public class UsersCreator : MonoBehaviour
 {
     [HideInInspector]
     public string nextUserName;
+    [HideInInspector]
     public int nextUserID;
+
+    private ushort defaultUserLevel = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +33,10 @@ public class UsersCreator : MonoBehaviour
     {
         return GlobalVariables.GetMaxUserID() + 1;
         // return Random.Range(0, 100);
+    }
+
+    public User CreateNewUser()
+    {
+        return new User(nextUserID, nextUserName, currentLevel: defaultUserLevel);
     }
 }

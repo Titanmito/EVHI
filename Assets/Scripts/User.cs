@@ -7,26 +7,17 @@ public class User
 {
     private int id;
     private string name;
-    private double[] features, initFeatures = null;
-    private bool testLevelPlayedOnly;
-    private ushort aptitude;
-    private short initAptitude = -1;
+    private double[] features, initFeatures;
+    private ushort aptitude, initAptitude;
+    private ushort currentLevel;
 
     public int UserID { get => id; }
     public string Name { get => name; set => name = value; }
-    public ushort Aptitude
-    {
-        get => aptitude;
-        set
-        {
-            testLevelPlayedOnly = false;
-            aptitude = value;
-        }
-    }
-    public short InitAptitude { get => initAptitude; set => initAptitude = value; }
-    public double[] Features { get => features; }
-    public double[] InitFeatures { get => initFeatures; }
-    public bool TestLevelPlayedOnly { get => testLevelPlayedOnly; }
+    public ushort Aptitude { get => aptitude; set => aptitude = value; }
+    public ushort InitAptitude { get => initAptitude; set => initAptitude = value; }
+    public double[] Features { get => features; set => UpdateFeatures(value); }
+    public double[] InitFeatures { get => initFeatures; set => UpdateFeatures(value, initFeatures: true); }
+    public ushort CurrentLevel { get => currentLevel; set => currentLevel = value; }
 
     /// <summary>
     /// Create user given their fields
@@ -35,28 +26,32 @@ public class User
     /// <param name="name"></param>
     /// <param name="features"></param>
     /// <param name="aptitude"></param>
-    /// <param name="testLevelPlayedOnly"></param>
+    /// <param name="initFeatures"></param>
+    /// <param name="initAptitude"></param>
+	/// <param name="currentLevel"></param>
     public User(
         int id, string name, double[] features, ushort aptitude = 0,
-        bool testLevelPlayedOnly = true
+        double[] initFeatures = null, short initAptitude = -1,
+        ushort currentLevel = 0
         )
     {
         this.id = id;
         this.name = name;
         this.features = new double[GlobalVariables.nbFeatures];
-        if (features.Length != GlobalVariables.nbFeatures)
-            throw new ArgumentException(GlobalVariables.featuresExceptionMessage);
-        for (int i = 0; i < GlobalVariables.nbFeatures; i++)
-            this.features[i] = features[i];
+        UpdateFeatures(features);
         this.aptitude = aptitude;
-        this.testLevelPlayedOnly = testLevelPlayedOnly;
-        if (testLevelPlayedOnly)
-        {
-            initAptitude = (short)aptitude;
-            initFeatures = new double[GlobalVariables.nbFeatures];
-            for (int i = 0; i < GlobalVariables.nbFeatures; i++)
-                initFeatures[i] = features[i];
-        }
+
+        this.initFeatures = new double[GlobalVariables.nbFeatures];
+        if (initFeatures == null)
+            UpdateFeatures(features, true);
+        else
+            UpdateFeatures(initFeatures, true);
+        if (initAptitude < 0)
+            this.initAptitude = aptitude;
+        else
+            this.initAptitude = (ushort)initAptitude;
+
+        this.currentLevel = currentLevel;
     }
 
     /// <summary>
@@ -66,50 +61,63 @@ public class User
     /// <param name="name"></param>
     /// <param name="featuresDefaultValue"></param>
     /// <param name="aptitude"></param>
-    /// <param name="testLevelPlayedOnly"></param>
+    /// <param name="initFeaturesDefaultValue"></param>
+	/// <param name="initAptitude"></param>
+	/// <param name="currentLevel"></param>
     public User(
         int id, string name, double featuresDefaultValue = 0.0,
-        ushort aptitude = 0, bool testLevelPlayedOnly = true
+        ushort aptitude = 0, double initFeaturesDefaultValue = 0.0,
+        short initAptitude = -1, ushort currentLevel = 0
         )
     {
         this.id = id;
         this.name = name;
         features = new double[GlobalVariables.nbFeatures];
-        for (int i = 0; i < GlobalVariables.nbFeatures; i++)
-            features[i] = featuresDefaultValue;
+        UpdateFeatures(featuresDefaultValue);
         this.aptitude = aptitude;
-        this.testLevelPlayedOnly = testLevelPlayedOnly;
-        if (testLevelPlayedOnly)
-        {
-            initAptitude = (short)aptitude;
-            initFeatures = new double[GlobalVariables.nbFeatures];
-            for (int i = 0; i < GlobalVariables.nbFeatures; i++)
-                initFeatures[i] = featuresDefaultValue;
-        }
+
+        initFeatures = new double[GlobalVariables.nbFeatures];
+        UpdateFeatures(initFeaturesDefaultValue, true);
+        if (initAptitude < 0)
+            this.initAptitude = aptitude;
+        else
+            this.initAptitude = (ushort)initAptitude;
+
+        this.currentLevel = currentLevel;
     }
 
     /// <summary>
     /// Update features given an array
     /// </summary>
     /// <param name="features"></param>
-    public void UpdateFeatures(double[] features)
+	/// <param name="initFeatures"></param>
+    public void UpdateFeatures(double[] features, bool initFeatures = false)
     {
         if (features.Length != GlobalVariables.nbFeatures)
             throw new ArgumentException(GlobalVariables.featuresExceptionMessage);
         for (int i = 0; i < GlobalVariables.nbFeatures; i++)
-            this.features[i] = features[i];
-        testLevelPlayedOnly = false;
+        {
+            if (initFeatures)
+                this.initFeatures[i] = features[i];
+            else
+                this.features[i] = features[i];
+        }
     }
 
     /// <summary>
     /// Udate features given a default value
     /// </summary>
     /// <param name="value"></param>
-    public void UpdateFeatures(double value)
+	/// <param name="initFeatures"></param>
+    public void UpdateFeatures(double value, bool initFeatures = false)
     {
         for (int i = 0; i < GlobalVariables.nbFeatures; i++)
-            features[i] = value;
-        testLevelPlayedOnly = false;
+        {
+            if (initFeatures)
+                this.initFeatures[i] = value;
+            else
+                features[i] = value;
+        }
     }
 
     /// <summary>
@@ -137,7 +145,7 @@ public class User
             line = lines[i]; 
             if (line != "")
             {
-                id = Int32.Parse(line.Split(GlobalVariables.csvValueSeparator[0])[0]);
+                id = Int32.Parse(line.Split(GlobalVariables.csvValueSeparator[0])[GlobalVariables.csvInitIDIndex]);
                 if (id == this.id)
                     throw new InvalidOperationException("The user with the same id has been already added to the data source");
             }
@@ -163,7 +171,7 @@ public class User
             line = lines[i];
             if (line != "")
             {
-                id = Int32.Parse(line.Split(GlobalVariables.csvValueSeparator[0])[0]);
+                id = Int32.Parse(line.Split(GlobalVariables.csvValueSeparator[0])[GlobalVariables.csvUsersIDIndex]);
                 if (id == this.id)
                 {
                     userFound = true;
@@ -227,6 +235,7 @@ public class User
     {
         string line = id.ToString() + GlobalVariables.csvValueSeparator;
         line += name.ToString() + GlobalVariables.csvValueSeparator;
+        line += currentLevel.ToString() + GlobalVariables.csvValueSeparator;
         line += aptitude.ToString() + GlobalVariables.csvValueSeparator;
         line += FeaturesToString(GlobalVariables.csvValueSeparator);
         return line;

@@ -761,8 +761,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1929555633}
-        m_TargetAssemblyTypeName: Leave, Assembly-CSharp
-        m_MethodName: leave
+        m_TargetAssemblyTypeName: BackToPreviousScene, Assembly-CSharp
+        m_MethodName: Back
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -819,9 +819,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1929555628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49b6ad9daf23180428222e3c3f54be54, type: 3}
+  m_Script: {fileID: 11500000, guid: 25c25d3ed89e64fdea7f6c44fe49313c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PreviousScene: MainMenu
 --- !u!1 &2001291659
 GameObject:
   m_ObjectHideFlags: 0

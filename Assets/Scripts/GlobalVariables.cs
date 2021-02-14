@@ -21,8 +21,17 @@ public class GlobalVariables
     };
     public static string usersPath = "users.csv", archivePath = "users_data_archive.csv",
         initPath = "users_data_init_level.csv";
+    public static int csvUsersIDIndex = 0, csvUsersNameIndex = 1, csvUsersCurrentLevelIndex = 2,
+        csvUsersAptitudeIndex = 3, csvUsersFeaturesFirstIndex = 4, csvUsersFeaturesLastIndex = 50;
+    public static int csvInitIDIndex = 0, csvInitAptitudeIndex = 1, csvInitFeaturesFirstIndex = 2,
+        csvInitFeaturesLastIndex = 48;
+    public static int csvArchiveIDIndex = 0, csvArchiveAptitudeIndex = 1,
+        csvArchiveFeaturesFirstIndex = 2, csvArchiveFeaturesLastIndex = 48, csvArchiveDateIndex = 48;
     public static string csvValueSeparator = ",", csvLineSeparator = "\n";
     public static string cultureName = "fr-FR";
+    public static string goNameUsersCreator = "UsersCreator", goNameUsersManager = "UsersManager";
+    public static string levelTitlePrefix = "Niveau", levelTitleSep = " ", levelTitleTestPostfix = "test";
+
 
     public static int GetMaxUserID()
     {
@@ -34,7 +43,7 @@ public class GlobalVariables
             line = lines[i];
             if (line != "")
             {
-                id = Int32.Parse(line.Split(csvValueSeparator[0])[0]);
+                id = Int32.Parse(line.Split(csvValueSeparator[0])[csvUsersIDIndex]);
                 if (i == 1)
                     max = id;
                 else if (id > max)

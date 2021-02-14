@@ -11,7 +11,8 @@ public class ConfirmNewUserReg : MonoBehaviour
     public void Confirm()
     {
         // Debug.Log(input.text);
-        GameObject.Find("UsersCreator").GetComponent<UsersCreator>().SaveNextUserName(input.text);
+        GameObject.Find(GlobalVariables.goNameUsersCreator).GetComponent<UsersCreator>().SaveNextUserName(input.text);
+        GameObject.Find(GlobalVariables.goNameUsersManager).GetComponent<ManageUsers>().CreateNewUser();
         SceneManager.LoadScene("NewUserNameSaved", LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync(gameObject.scene);
     }
