@@ -12,11 +12,9 @@ public class PlayLevelButtonClick : MonoBehaviour
     {
         string levelToPlay = dropdown.options[dropdown.value].text.Split(GlobalVariables.levelTitleSep[0])[1];
         if (levelToPlay == GlobalVariables.levelTitleTestPostfix)
-            playLevelManager.GetComponent<PlayAgainTest>().playAgain();
+            PlayerPrefs.SetInt("Level", 0);
         else
-        {
             PlayerPrefs.SetInt("Level", Int32.Parse(levelToPlay));
-            playLevelManager.GetComponent<PlayAgainLevels>().playAgain();
-        }
+        playLevelManager.GetComponent<PlayAgainLevels>().playAgain();
     }
 }

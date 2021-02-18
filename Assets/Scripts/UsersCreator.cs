@@ -1,4 +1,4 @@
-﻿  using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ public class UsersCreator : MonoBehaviour
     {
         nextUserName = name;
         nextUserID = GenerateUserID();
-        Debug.Log("Saved! Name: " + name + " id: " + nextUserID.ToString());
+        // Debug.Log("Saved! Name: " + name + " id: " + nextUserID.ToString());
     }
 
     public int GenerateUserID()

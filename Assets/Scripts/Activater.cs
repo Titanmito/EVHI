@@ -5,12 +5,14 @@ using UnityEngine;
 public class Activater : MonoBehaviour
 {
 
-    public KeyCode key;
+    public GlobalVariables.JoystickButton button;
+    private KeyCode key;
     private bool active = false;
     private GameObject note;
     private SpriteRenderer sr;
     private Color old;
     private GameObject kz;
+    public GameObject NotesCounter;
 
     void Awake(){
         sr = GetComponent<SpriteRenderer>();
@@ -21,6 +23,7 @@ public class Activater : MonoBehaviour
     {
         old = sr.color;
         kz = GameObject.Find("KillZone");
+        key = GameObject.Find(GlobalVariables.goNameJoystickManager).GetComponent<ManageJoystickConfig>().config[button];
     }
 
     // Update is called once per frame
@@ -33,6 +36,7 @@ public class Activater : MonoBehaviour
             Destroy(note);
             kz.GetComponent<KillZone>().AddStreak();
             AddScore();
+            NotesCounter.GetComponent<CountNotes>().Count--;
         }
         else if(Input.GetKeyDown(key) && !active){
             kz.GetComponent<KillZone>().ResetStreak();

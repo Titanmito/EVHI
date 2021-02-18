@@ -12,6 +12,7 @@ public class KillZone : MonoBehaviour
     int streak = 0;
     public bool testlevel;
     public int level;
+    public GameObject NotesCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,7 @@ public class KillZone : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col){
         Destroy(col.gameObject);
         ResetStreak();
+        NotesCounter.GetComponent<CountNotes>().Count--;
     }
 
     public void ResetStreak(){

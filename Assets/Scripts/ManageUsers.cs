@@ -27,8 +27,8 @@ public class ManageUsers : MonoBehaviour
     {
         currentUser = GameObject.Find(GlobalVariables.goNameUsersCreator).GetComponent<UsersCreator>().CreateNewUser();
         users.Add(currentUser);
-        foreach (User user in users)
-            Debug.Log(user.ToString());
+        //foreach (User user in users)
+        //    Debug.Log(user.ToString());
         //currentUser.DumpInitData();
         //currentUser.DumpToUsers();
         //currentUser.DumpToArchive();
