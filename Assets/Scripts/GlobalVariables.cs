@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class GlobalVariables
 {
     public static int nbFeatures = 46;
     public static ushort levelCount = 3;
+    public static ushort keysCount = 6;
+    public static ushort nbExtraFeatures = 3;
     public static string featuresExceptionMessage =
         "The length of the given features array must correspond exactly to " +
         "NbFeatures";
@@ -23,7 +26,9 @@ public class GlobalVariables
         "v_r1_triangle", "v_r1_circle", "v_r1_l1", "v_r1_r1", "v_mental", "v_pointing", "v_typing"
     };
     public static string usersPath = "users.csv", archivePath = "users_data_archive.csv",
-        initPath = "users_data_init_level.csv";
+        initPath = "users_data_init_level.csv", mentalPointingTypingPath = "mental_pointing_typing_traces.csv",
+        buttonPushPath = "button_push_traces.csv";
+    public static string lastAptitudeRequest = "last_aptitude_request.csv", lastAptitudeReply = "last_aptitude_reply.txt";
     public static int csvUsersIDIndex = 0, csvUsersNameIndex = 1, csvUsersCurrentLevelIndex = 2,
         csvUsersAptitudeIndex = 3, csvUsersFeaturesFirstIndex = 4, csvUsersFeaturesLastIndex = 50;
     public static int csvInitIDIndex = 0, csvInitAptitudeIndex = 1, csvInitFeaturesFirstIndex = 2,
@@ -33,7 +38,7 @@ public class GlobalVariables
     public static string csvValueSeparator = ",", csvLineSeparator = "\n";
     public static string cultureName = "fr-FR";
     public static string goNameUsersCreator = "UsersCreator", goNameUsersManager = "UsersManager",
-        goNameJoystickManager = "JoystickManager";
+        goNameJoystickManager = "JoystickManager", goNameButtonPushContainer = "ButtonPushContainer";
     public static string levelTitlePrefix = "Niveau", levelTitleSep = " ", levelTitleTestPostfix = "test";
     public static string dualshock4Name = "Dualshock 4";
     public static readonly Dictionary<JoystickButton, KeyCode> dualshock4Buttons = new Dictionary<JoystickButton, KeyCode>
@@ -107,5 +112,25 @@ public class GlobalVariables
     public enum JoystickModel
     {
         Dualshock4, ThrustmasterESwapProContoller
+    }
+
+    public static readonly KeyCode[] JoystickKeys = new KeyCode[6]
+    {
+        KeyCode.JoystickButton0,
+        KeyCode.JoystickButton1,
+        KeyCode.JoystickButton2,
+        KeyCode.JoystickButton3,
+        KeyCode.JoystickButton4,
+        KeyCode.JoystickButton5
+    };
+
+    public static class DictionaryUtiles<TKey, TValue>
+    {
+        public static TKey GetKey(Dictionary<TKey, TValue> dictionary, TValue value)
+        {
+            if (!dictionary.ContainsValue(value))
+                throw new InvalidOperationException("Value not found in the dictionary!");
+            return dictionary.FirstOrDefault(x => x.Value.Equals(value)).Key;
+        }
     }
 }

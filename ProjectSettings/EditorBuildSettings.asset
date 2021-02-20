@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 30b44adf5bfca1c4687389b4522e21c9
+  - enabled: 1
+    path: Assets/Scenes/GlobalGameObjects.unity
+    guid: 7f318eadc1fe7494f9ca2387edc10d09
+  - enabled: 1
     path: Assets/Scenes/TestLevel.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/Lose.unity
     guid: 2e9e6308061baf948902e0fcbc59115d
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 30b44adf5bfca1c4687389b4522e21c9
   - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: 62ae206f3c33e034e821f9cf2215020f
@@ -23,4 +26,25 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: 588f6c75a7fec2141adadd1592034f00
+  - enabled: 1
+    path: Assets/Scenes/NewUserNameSaved.unity
+    guid: a62f24797a44f446cb5b14d6aa34eaeb
+  - enabled: 1
+    path: Assets/Scenes/Login.unity
+    guid: 9c270e8c66b0d475f9bde1d0620b8148
+  - enabled: 1
+    path: Assets/Scenes/SignIn.unity
+    guid: dc777b6aac9124449bc759a5ea34919b
+  - enabled: 1
+    path: Assets/Scenes/SignUp.unity
+    guid: 67c52f898da084b299b717a298b660c9
+  - enabled: 1
+    path: Assets/Scenes/LevelChoice.unity
+    guid: 39f0a5c18bc914223a09830f8e9a41ef
+  - enabled: 1
+    path: Assets/Scenes/Preferences.unity
+    guid: 08998f3ab895b4a2996ed57ddbf9b4e8
+  - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: 123f0a1aa1bc846f3a970c00db4c91c2
   m_configObjects: {}

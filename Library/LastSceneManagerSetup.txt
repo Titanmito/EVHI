@@ -47,3 +47,11 @@ sceneSetups:
   isLoaded: 0
   isActive: 0
   isSubScene: 0
+- path: Assets/Scenes/Preferences.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0
+- path: Assets/Scenes/Win.unity
+  isLoaded: 0
+  isActive: 0
+  isSubScene: 0

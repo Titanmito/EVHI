@@ -39,6 +39,7 @@ public class KillZone : MonoBehaviour
         PlayerPrefs.SetInt("RockMetter", PlayerPrefs.GetInt("RockMetter") - 2);
         if (PlayerPrefs.GetInt("RockMetter") < 0 && !testlevel){
             Lose();
+            GameObject.Find(GlobalVariables.goNameUsersManager).GetComponent<ManageUsers>().DumpButtonPushes(testlevel);
         }
         else if (PlayerPrefs.GetInt("RockMetter") < 0){
             PlayerPrefs.SetInt("RockMetter", PlayerPrefs.GetInt("RockMetter") + 2);

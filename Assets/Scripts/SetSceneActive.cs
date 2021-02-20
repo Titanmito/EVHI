@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SetSceneActive : MonoBehaviour
 {
     void Start()
     {
-        SceneManager.SetActiveScene(gameObject.scene);
+        try { SceneManager.SetActiveScene(gameObject.scene); }
+        catch(ArgumentException e) { Debug.Log(e.Message); }
     }
 }

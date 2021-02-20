@@ -13,6 +13,8 @@ public class Activater : MonoBehaviour
     private Color old;
     private GameObject kz;
     public GameObject NotesCounter;
+    private float timeCounter;
+    private GameObject container;
 
     void Awake(){
         sr = GetComponent<SpriteRenderer>();
@@ -24,11 +26,16 @@ public class Activater : MonoBehaviour
         old = sr.color;
         kz = GameObject.Find("KillZone");
         key = GameObject.Find(GlobalVariables.goNameJoystickManager).GetComponent<ManageJoystickConfig>().config[button];
+        container = GameObject.Find(GlobalVariables.goNameButtonPushContainer);
+        container.GetComponent<ButtonPushContainer>().RealMoments.Clear();
+        timeCounter = 0.0f;
+        container.GetComponent<ButtonPushContainer>().SuccessfulPushes = (ushort)0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        timeCounter += Time.deltaTime;
         if(Input.GetKeyDown(key)){
             StartCoroutine(Pressed());
         }
@@ -37,6 +44,7 @@ public class Activater : MonoBehaviour
             kz.GetComponent<KillZone>().AddStreak();
             AddScore();
             NotesCounter.GetComponent<CountNotes>().Count--;
+            container.GetComponent<ButtonPushContainer>().SuccessfulPushes++;
         }
         else if(Input.GetKeyDown(key) && !active){
             kz.GetComponent<KillZone>().ResetStreak();
@@ -48,6 +56,8 @@ public class Activater : MonoBehaviour
         if(col.gameObject.tag == "Note"){
             note = col.gameObject;
         }
+        // Debug.Log("Ideal moment!");
+        container.GetComponent<ButtonPushContainer>().RealMoments.Add(timeCounter);
     }
 
     void OnTriggerExit2D(Collider2D col){
