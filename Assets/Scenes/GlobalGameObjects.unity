@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentUserTypingTime: -1
+  approach: 1
 --- !u!4 &1347021391
 Transform:
   m_ObjectHideFlags: 0
@@ -288,6 +289,7 @@ MonoBehaviour:
   PushedButtons: 
   RealMoments: []
   PushedMoments: []
+  SuccessfulPushes: 0
 --- !u!4 &1902236740
 Transform:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class ManageUsers : MonoBehaviour
     public User currentUser = null;
     [HideInInspector]
     public float currentUserTypingTime = -1f;
+    public AptitudeUpdateApproach approach = AptitudeUpdateApproach.ML;
 
     private List<GlobalVariables.JoystickButton> RealButtons = null, PushedButtons = null;
     private List<float> RealMoments = null, PushedMoments = null;
@@ -196,7 +197,8 @@ public class ManageUsers : MonoBehaviour
         for (int i = 0; i < GlobalVariables.nbFeatures - ((int)GlobalVariables.nbExtraFeatures); i++)
             vect[i] = currentUser.Features[i];
         currentUser.Features = vect;
-        UpdateAptitude();
+        if (approach != AptitudeUpdateApproach.Naive)
+            UpdateAptitude();
         Debug.Log("Dumping MPT");
         currentUser.DumpToUsers();
         currentUser.DumpToArchive();
@@ -287,16 +289,36 @@ public class ManageUsers : MonoBehaviour
         }
         else
         {
-            using (FileStream fs = new FileStream(GlobalVariables.lastAptitudeRequest, FileMode.Create, FileAccess.Write))
-                using (StreamWriter sw = new StreamWriter(fs))
-                    sw.Write(currentUser.FeaturesToString(GlobalVariables.csvValueSeparator));
-            Debug.Log("Features sent " + currentUser.FeaturesToString(GlobalVariables.csvValueSeparator));
-            waitForAptitude = true;
+            if (approach == AptitudeUpdateApproach.ML)
+            {
+                using (FileStream fs = new FileStream(GlobalVariables.lastAptitudeRequest, FileMode.Create, FileAccess.Write))
+                    using (StreamWriter sw = new StreamWriter(fs))
+                        sw.Write(currentUser.FeaturesToString(GlobalVariables.csvValueSeparator));
+                Debug.Log("Features sent " + currentUser.FeaturesToString(GlobalVariables.csvValueSeparator));
+                waitForAptitude = true;
+            }
+            else
+            {
+                int SuccessfulPushes = (int)GameObject.Find(GlobalVariables.goNameButtonPushContainer).GetComponent<ButtonPushContainer>().SuccessfulPushes;
+                int maxCount = Math.Max(PushedButtons.Count, RealButtons.Count);
+                double a = (SuccessfulPushes * 1.0) / maxCount;
+                ushort aptitude = currentUser.Aptitude;
+                if (a < 0.25)
+                    aptitude = aptitude == 0 ? aptitude : (ushort)(aptitude - (ushort)1);
+                else if (a > 0.9)
+                    aptitude = aptitude == 4 ? aptitude : (ushort)(aptitude + (ushort)1);
+                currentUser.Aptitude = aptitude;
+            }
         }
     }
 
     private int JoystickButtonIndex(GlobalVariables.JoystickButton button)
     {
         return System.Array.FindIndex(joystickButtons, btn => btn.Equals(button));
+    }
+
+    public enum AptitudeUpdateApproach
+    {
+        ML, Naive
     }
 }

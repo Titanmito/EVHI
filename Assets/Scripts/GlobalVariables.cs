@@ -81,7 +81,7 @@ public class GlobalVariables
         {Tuple.Create(3, (ushort)1), new LevelDifficulty(1.1f, 36)},
         {Tuple.Create(3, (ushort)2), new LevelDifficulty(0.8f, 40)},
         {Tuple.Create(3, (ushort)3), new LevelDifficulty(0.5f, 44)},
-        {Tuple.Create(3, (ushort)4), new LevelDifficulty(0.2f, 48)},
+        {Tuple.Create(3, (ushort)4), new LevelDifficulty(0.2f, 48)}
     };
 
     public static int GetMaxUserID()
